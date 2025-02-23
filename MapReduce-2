@@ -52,3 +52,8 @@ if __name__ == "__main__":
     non_english_word_counts = process_file(file_path)
     print(non_english_word_counts)
 
+
+Output:
+
+{'trelawney': 23, 'wouldn': 1, 'azkaban': 10, 'ztcprep': 16, 'www': 16, 've': 6, 'unfogging': 2, 'hermione': 20, 'didn': 5, 'wasn': 2, 'hadn': 1, 'blotts': 1, 'll': 3, 'finnigan': 1, 'seamus': 1, 'tt': 1, 'thd': 1, 'mcgonagall': 7, 'animagi': 1, 'sibyll': 1, 'dursleys': 1, 'bilius': 1, 'grims': 1, 'arithmancy': 4, '1l': 1, 'hasn': 2, 'weren': 1, 'hagrid': 12, 'slytherins': 1, 'malfoy': 8, 'goyle': 1, 'yeh': 6, 'comin': 1, 'ter': 3, 'spellotape': 1, 'righ': 1, 'il': 2, 'dementor': 1, 'oooooooh': 1}
+
