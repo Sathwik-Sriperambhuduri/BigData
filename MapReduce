@@ -1,1 +1,47 @@
+from collections import defaultdict
+import re
 
+# Birth date: 03/15/2003
+
+
+def map_function(text):# Simulate the map step: tokenize and count word occurrences.
+    words = re.findall(r'\w+', text.lower())  # Tokenize and convert text to lower case
+    return [(word, 1) for word in words]
+
+def shuffle_sort(mapped_data): # Simulate the shuffle and sort step: Organize words by key.
+    shuffled_data = defaultdict(list)
+    for key, value in mapped_data:
+        shuffled_data[key].append(value)
+    return shuffled_data
+
+def reduce_function(shuffled_data):# Simulate the reduce step: Aggregate counts for each word.
+    reduced_data = {}
+    for key, values in shuffled_data.items():
+        reduced_data[key] = sum(values)  # Sum all occurrences of each word
+    return reduced_data
+
+def process_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:  # Specify UTF-8 encoding
+            text = file.read()
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='latin-1') as file:  # Fall back to Latin-1 if UTF-8 fails
+            text = file.read()
+
+    # Map phase
+    mapped_data = []
+    for line in text.splitlines():
+        mapped_data.extend(map_function(line))
+    
+    # Shuffle and sort phase
+    shuffled_data = shuffle_sort(mapped_data)
+    
+    # Reduce phase
+    reduced_data = reduce_function(shuffled_data)
+    
+    return reduced_data
+
+if __name__ == "__main__":
+    file_path = 'file1.txt'
+    word_counts = process_file(file_path)
+    print(word_counts)
