@@ -1,1 +1,54 @@
+#2. From the second text file (file2.txt), write Python code and use MapReduct to count how many times non-English words (names, places, spells etc.) were used. List those words and how many times each was repeated.
+There are multiple ways of doing this. You can use pyenchant (https://pypi.org/project/pyenchant/), pyspellchecker (https://pyspellchecker.readthedocs.io/en/latest/) or just download a list of words (http://www.gwicks.net/dictionaries.htm) and search through them.
+
+from collections import defaultdict
+import re
+from spellchecker import SpellChecker
+
+# Initialize the spell checker
+spell = SpellChecker()
+
+def map_function(text):
+    """ Map function to tokenize text and identify non-English words. """
+    words = re.findall(r'\w+', text.lower())  # Tokenize and convert text to lower case
+    misspelled = spell.unknown(words)  # Check which words are not recognized as correct English words
+    return [(word, 1) for word in misspelled]
+
+def shuffle_sort(mapped_data):
+    """ Organize words by key for reduction. """
+    shuffled_data = defaultdict(list)
+    for key, value in mapped_data:
+        shuffled_data[key].append(value)
+    return shuffled_data
+
+def reduce_function(shuffled_data):
+    """ Reduce function to sum up the occurrences of each non-English word. """
+    reduced_data = {}
+    for key, values in shuffled_data.items():
+        reduced_data[key] = sum(values)
+    return reduced_data
+
+def process_file(file_path):
+    """ Read the file, and process it through map, shuffle/sort, and reduce phases. """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            text = file.read()
+    except UnicodeDecodeError:
+        with open(file_path, 'r', encoding='latin-1') as file:
+            text = file.read()
+
+    mapped_data = []
+    for line in text.splitlines():
+        mapped_data.extend(map_function(line))
+
+    shuffled_data = shuffle_sort(mapped_data)
+    reduced_data = reduce_function(shuffled_data)
+    
+    return reduced_data
+
+# Example usage
+if __name__ == "__main__":
+    file_path = 'file2.txt'
+    non_english_word_counts = process_file(file_path)
+    print(non_english_word_counts)
 
