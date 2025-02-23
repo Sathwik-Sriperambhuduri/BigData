@@ -1,3 +1,5 @@
+# 1. Write Python code and use MapReduct to count occurrences of each word in the first text file (file.txt). How many times each word is repeated?
+
 from collections import defaultdict
 import re
 
@@ -45,3 +47,7 @@ if __name__ == "__main__":
     file_path = 'file1.txt'
     word_counts = process_file(file_path)
     print(word_counts)
+
+
+Output:
+
